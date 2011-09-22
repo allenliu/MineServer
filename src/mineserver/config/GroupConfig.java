@@ -3,7 +3,10 @@ package mineserver.config;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
+import java.util.Set;
 
 import mineserver.IOHandler;
 import mineserver.resource.AbstractResource;
@@ -12,17 +15,18 @@ import mineserver.resource.Resource;
 import org.apache.commons.io.FileUtils;
 import org.yaml.snakeyaml.Yaml;
 
-public class PermissionConfig extends AbstractResource {
-
+public class GroupConfig extends AbstractResource {
+    
     private static final String DEFAULTS_PATH = "defaults";
 
-    private Map<String, Map<String, Object>> permissions;
+    private Map<Integer, String> groupNames;
+    private Map<Integer, Set<String>> groupMembers;
+    private Map<String, Integer> memberToLevel;
 
-    public PermissionConfig() {
-        super("permissions.yaml");
+    public GroupConfig() {
+        super("groups.yaml");
     }
-
-    @SuppressWarnings("unchecked")
+    
     @Override
     public void load() {
         File dir = new File(Resource.CONFIG_PATH);
@@ -54,31 +58,37 @@ public class PermissionConfig extends AbstractResource {
             input = new FileInputStream(file);
             Yaml yaml = new Yaml();
 
-            permissions = (Map<String, Map<String, Object>>) yaml.load(input);
+            Iterator<Object> iter = yaml.loadAll(input).iterator();
+            groupNames = (Map<Integer, String>) iter.next();
+            groupMembers = (Map<Integer, Set<String>>) iter.next();
 
             input.close();
+            
+            memberToLevel = new HashMap<String, Integer>();
+            for (Integer i : groupMembers.keySet()) {
+                for (String name : groupMembers.get(i)) {
+                    memberToLevel.put(name, i);
+                }
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
-
+    
     @Override
     public void save() {
         // TODO Auto-generated method stub
 
     }
-
-    public Integer allow(String commandName) {
-        return (Integer) permissions.get(commandName).get("allow");
-    }
     
-    public boolean show(String commandName) {
-        return (Boolean) permissions.get(commandName).get("show");
+    public boolean hasAccess(String name, int level) {
+        if (level == 1) {
+            return true;
+        }
+        int foundLevel = 1;
+        if (memberToLevel.containsKey(name)) {
+            foundLevel = memberToLevel.get(name);
+        }
+        return foundLevel >= level;
     }
-    
-    public Map<String, Map<String, Object>> getPermissions() {
-        return permissions;
-    }
-
 }

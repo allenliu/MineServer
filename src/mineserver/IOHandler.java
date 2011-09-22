@@ -9,14 +9,14 @@ public class IOHandler {
 
     private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd kk:mm:ss");
     
-    Server server;
-    Client client;
+    private final Server server;
+    private ServerClient serverClient;
 
     private boolean loaded = false;
 
-    public IOHandler(Server server, Client client){
+    public IOHandler(Server server, ServerClient serverClient){
         this.server= server;
-        this.client = client;
+        this.serverClient = serverClient;
     }
 
     public synchronized void waitUntilLoaded() throws InterruptedException {
@@ -41,7 +41,7 @@ public class IOHandler {
         CommandFactory commandFactory = server.getCommandFactory();
         Command command = commandFactory.getCommand(line);
         if (command != commandFactory.getInvalidCommand()) {
-            command.execute(client, line);
+            command.execute(serverClient, line);
             return true;
         } else {
             return false;

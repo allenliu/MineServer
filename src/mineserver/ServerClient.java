@@ -8,21 +8,23 @@ public class ServerClient implements Client {
         this.server = server;
     }
     
-    public void setName(String name) {
-        
-    }
+    public void setName(String name) {}
     
     public String getName() {
-        return "ServerClient";
+        return "Console";
     }
     
     public void info(String message) {
-        
+        IOHandler.println(message);
     }
     
-    public void usage(String message) {}
+    public void usage(String message) {
+        IOHandler.println("Usage: " + message);
+    }
     
-    public void warning(String message) {}
+    public void warning(String message) {
+        IOHandler.println(message);
+    }
     
     public void mute() {}
     

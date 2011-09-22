@@ -33,6 +33,7 @@ public class CommandFactory {
                 command = (Command) Class.forName("mineserver.command." + commandName + "Command").getConstructor(Server.class).newInstance(server);
             } catch (Exception e) {
                 IOHandler.println("Error loading command '" + commandName + "'.");
+                e.printStackTrace();
                 continue;
             }
             commandSet.add(command);

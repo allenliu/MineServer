@@ -7,6 +7,8 @@ import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 import mineserver.command.Command;
+import mineserver.config.GroupConfig;
+import mineserver.config.PermissionConfig;
 import mineserver.event.DestroyEntityEvent;
 import mineserver.event.Event;
 import mineserver.event.RainEvent;
@@ -18,7 +20,8 @@ import mineserver.stream.StreamTunnel;
 public class PlayerClient implements Client {
 
     private final Server server;
-    private IOHandler inputHandler;
+    private PermissionConfig permissionConfig;
+    private GroupConfig groupConfig;
 
     private final Socket external;
     private Socket internal;
@@ -49,7 +52,8 @@ public class PlayerClient implements Client {
 
     public PlayerClient(Server server, Socket client) {
         this.server = server;
-        //this.inputHandler = server.getInputHandler();
+        this.permissionConfig = server.getPermissionConfig();
+        this.groupConfig = server.getGroupConfig();
         this.external = client;
 
         System.out.println("[MineServer] IP Connection from " + getIPAddress() + "!");
@@ -114,11 +118,15 @@ public class PlayerClient implements Client {
             CommandFactory commandFactory = server.getCommandFactory();
             Command command = commandFactory.getCommand(line);
             if (command != commandFactory.getInvalidCommand()) {
-                command.execute(this, line);
+                if (groupConfig.hasAccess(getName(), permissionConfig.allow(command.getName()))) {
+                    command.execute(this, line);
+                    return true;
+                }
+                warning("You do not have access to that command.");
                 return true;
             } else {
                 warning("That command does not exist.");
-                return false;
+                return true;
             }
         }
         return false;

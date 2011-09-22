@@ -10,6 +10,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.Semaphore;
 
+import mineserver.config.GroupConfig;
 import mineserver.config.PermissionConfig;
 import mineserver.config.ServerProperties;
 import mineserver.event.ConfuseEvent;
@@ -42,6 +43,7 @@ public class Server {
     // resources
     private List<Resource> resources;
     private PermissionConfig permissions;
+    private GroupConfig groups;
     private MuteList muteList;
     private ChestList chestList;
 
@@ -68,12 +70,13 @@ public class Server {
     private void init() {
         resources = new LinkedList<Resource>();
         resources.add(permissions = new PermissionConfig());
+        resources.add(groups = new GroupConfig());
         resources.add(muteList = new MuteList());
         resources.add(chestList = new ChestList());
 
-        Client dummyClient = new ServerClient(this);
+        ServerClient serverClient = new ServerClient(this);
 
-        ioHandler = new IOHandler(this, dummyClient);
+        ioHandler = new IOHandler(this, serverClient);
         commandFactory = new CommandFactory(this, permissions);
 
         clientList = new ClientList();
@@ -271,6 +274,10 @@ public class Server {
 
     public PermissionConfig getPermissionConfig() {
         return permissions;
+    }
+    
+    public GroupConfig getGroupConfig() {
+        return groups;
     }
 
     public MuteList getMuteList() {

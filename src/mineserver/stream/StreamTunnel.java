@@ -316,7 +316,7 @@ public class StreamTunnel {
         case 0x14: // Named Entity Spawn
             eid = in.readInt();
             String entityName = readUTF16();
-            if (client.getServer().getClient(entityName).isVanished()) {
+            if (client.getServer().hasClient(entityName) && client.getServer().getClient(entityName).isVanished()) {
                 skipBytes(16);
                 break;
             }

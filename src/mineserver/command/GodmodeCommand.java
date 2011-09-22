@@ -7,9 +7,9 @@ import mineserver.Client;
 import mineserver.PlayerClient;
 import mineserver.Server;
 
-public class GodCommand extends AbstractCommand {
+public class GodmodeCommand extends AbstractCommand {
 
-    public GodCommand(Server server) {
+    public GodmodeCommand(Server server) {
         super(server);
     }
     
