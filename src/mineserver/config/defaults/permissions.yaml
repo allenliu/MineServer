@@ -1,0 +1,32 @@
+Ban:
+  allow: 3
+Drunk:
+  allow: 3
+Help:
+  allow: 1
+Gamemode:
+  allow: 3
+Give:
+  allow: 2
+God:
+  allow: 3
+Kick:
+  allow: 2
+Lock:
+  allow: 1
+Mute:
+  allow: 2
+Rain:
+  allow: 2
+Smite:
+  allow: 2
+Speed:
+  allow: 3
+Stop:
+  allow: 3
+Teleport:
+  allow: 3
+Time:
+  allow: 2
+Vanish:
+  allow: 2

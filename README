@@ -1,0 +1,29 @@
+MineServer 1.0 - An open source Minecraft SMP server wrapper/tunnel
+Copyright (c) 2011 MineServer authors
+See LICENSE for details.
+
+Installation:
+1) Run launch.bat to start the server for the first time. The default 
+configuration files will also be created.
+2) Connect to the server using your IP address. The default port is 25565 
+(same as vanilla). This can be changed in mineserver.properties.
+
+Features:
+- automated map saving and backups
+- improved time and teleport commands
+- lock chests
+- mute players
+- control weather
+- vanish mode and godmode
+
+Planned:
+- configurable user groups
+- improved give command
+- area protections
+- custom kits
+- automated mapping with a 3rd party mapper
+- reduce console spam
+
+Information:
+- Program design was influenced by SimpleServer (https://github.com/SimpleServer/SimpleServer)
+- Minecraft Protocal can be found at http://mc.kev009.com/Protocol
