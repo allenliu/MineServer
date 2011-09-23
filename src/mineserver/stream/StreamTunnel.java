@@ -331,7 +331,7 @@ public class StreamTunnel {
             readWriteBytes(24);
             break;
         case 0x16: // Collect Item
-            // hide item collection by ninjas
+            // hide item collection by vanished players
             int itemId = in.readInt();
             eid = in.readInt();
             if (isServerTunnel && client.getServer().hasClient(eid) && client.getServer().getClient(eid).isVanished()) {
@@ -894,7 +894,7 @@ public class StreamTunnel {
 
     private void sendMessagePacket(String message) throws IOException {
         if (message.length() > MESSAGE_SIZE) {
-            System.out.println("[MineServer] Invalid message size: " + message);
+            IOHandler.println("Invalid message size: " + message);
             return;
         }
         if (message.length() > 0) {

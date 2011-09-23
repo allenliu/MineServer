@@ -37,6 +37,7 @@ public class KickCommand extends AbstractCommand {
             PlayerClient target = server.getTarget(client, args[1]);
             if (target != null) {
                 target.kick("");
+                client.info("You kicked " + target.getName() + " from the server.");
             }
             return;
         }

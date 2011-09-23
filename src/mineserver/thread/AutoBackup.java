@@ -24,6 +24,7 @@ public class AutoBackup {
 
     private long lastSaveTime;
 
+    private volatile boolean forceBackup = false;
     private volatile boolean run = true;
 
     public AutoBackup(Server server) {
@@ -41,7 +42,16 @@ public class AutoBackup {
         backupThread.interrupt();
     }
 
+    public void forceBackup() {
+        forceBackup = true;
+        backupThread.interrupt();
+    }
+    
     private boolean shouldBackup() {
+        if (forceBackup) {
+            forceBackup = false;
+            return true;
+        }
         long elapsedTime = System.currentTimeMillis();
         if (elapsedTime - BACKUP_INTERVAL * MILLISECONDS_PER_MINUTE > lastSaveTime) {
             return true;

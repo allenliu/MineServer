@@ -55,9 +55,13 @@ public class TimeCommand extends AbstractCommand {
                 return;
             }
             String arg = args[1];
-            if (arg.equalsIgnoreCase("set") || arg.equalsIgnoreCase("add")) {
-                server.runCommand("time", new String[] {arg, Integer.toString(i)});
+            if (arg.equalsIgnoreCase("set")) {
+                server.runCommand("time", new String[] {"set", Integer.toString(i)});
                 client.info("Time was set to " + i + ".");
+                return;
+            } else if (arg.equalsIgnoreCase("add")) {
+                server.runCommand("time", new String[] {"add", Integer.toString(i)});
+                client.info(i + " was added to the time.");
                 return;
             }
         }

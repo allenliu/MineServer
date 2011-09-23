@@ -142,7 +142,7 @@ public class Server {
         }
     }
 
-    private void saveResources() {
+    public void saveResources() {
         for (Resource resource : resources) {
             resource.save();
         }
@@ -154,6 +154,10 @@ public class Server {
     
     public boolean isSaving() {
         return saving;
+    }
+    
+    public void forceBackup() {
+        autoBackup.forceBackup();
     }
     
     private final class Listener extends Thread {

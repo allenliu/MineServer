@@ -1,3 +1,6 @@
+Backup:
+  allow: 2
+  show: true
 Ban:
   allow: 2
   show: true
@@ -36,6 +39,9 @@ Rain:
   show: true
 Reply:
   allow: 0
+  show: true
+Save:
+  allow: 2
   show: true
 Smite:
   allow: 2
