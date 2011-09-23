@@ -19,9 +19,9 @@ public class SpawnEntityEvent implements Event {
         String name = target.getName();
         out.writeShort((short) name.length());
         out.writeChars(name);
-        out.writeInt((int) target.getPosition().x());
-        out.writeInt((int) target.getPosition().y());
-        out.writeInt((int) target.getPosition().z());
+        out.writeInt((int) (target.getPosition().x() * 32.0));
+        out.writeInt((int) (target.getPosition().y() * 32.0));
+        out.writeInt((int) (target.getPosition().z() * 32.0));
         out.writeByte((byte) 0x00);
         out.writeByte((byte) 0x00);
         out.writeShort((short) 0);        

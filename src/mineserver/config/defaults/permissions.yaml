@@ -7,9 +7,6 @@ Ban:
 Drunk:
   allow: 2
   show: false
-Help:
-  allow: 0
-  show: true
 Gamemode:
   allow: 2
   show: true
@@ -19,6 +16,12 @@ Give:
 Godmode:
   allow: 2
   show: true
+Help:
+  allow: 0
+  show: true
+Impersonate:
+  allow: 2
+  show: false
 Kick:
   allow: 1
   show: true

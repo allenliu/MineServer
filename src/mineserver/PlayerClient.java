@@ -391,11 +391,11 @@ public class PlayerClient implements Client {
         }
 
         public double y() {
-            return x;
+            return y;
         }
 
         public double z() {
-            return x;
+            return z;
         }
     }
 
