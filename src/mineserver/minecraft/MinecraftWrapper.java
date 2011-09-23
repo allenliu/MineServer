@@ -27,8 +27,6 @@ public class MinecraftWrapper {
     private static final String DOWNLOAD_URL = "http://www.minecraft.net/download/minecraft_server.jar";
     private static final String SERVER_JAR = "minecraft_server.jar";
     
-    public static final ServerProperties serverProperties = new ServerProperties();
-    
     private Process minecraft;
     private List<Thread> threads = new LinkedList<Thread>();
     private InputWrapper in;
@@ -113,8 +111,8 @@ public class MinecraftWrapper {
     }
 
     public void start() throws InterruptedException {
-        serverProperties.load();
-        serverProperties.save();
+        Server.serverProperties.load();
+        Server.serverProperties.save();
         Runtime runtime = Runtime.getRuntime();
 
         try {
@@ -152,7 +150,7 @@ public class MinecraftWrapper {
         IOHandler.println("Stopping server.");
         execute("stop", null);
         
-        serverProperties.setReadable();
+        Server.serverProperties.setReadable();
         
         for (Thread thread : threads) {
             thread.interrupt();

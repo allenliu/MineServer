@@ -58,7 +58,7 @@ public class PlayerClient implements Client {
         this.groupConfig = server.getGroupConfig();
         this.external = client;
 
-        System.out.println("[MineServer] IP Connection from " + getIPAddress() + "!");
+        IOHandler.println("IP Connection from " + getIPAddress() + "!");
 
         try {
             InetAddress localAddress = InetAddress.getByName(server.getAddressFactory().getNextAddress());
@@ -109,7 +109,7 @@ public class PlayerClient implements Client {
             } catch (Exception e) {
             }
 
-            System.out.println("[MineServer] Socket Closed: " + external.getInetAddress().getHostAddress());
+            IOHandler.println("Socket Closed: " + external.getInetAddress().getHostAddress());
         }
     }
 

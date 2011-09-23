@@ -2,9 +2,13 @@ package mineserver.config;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -77,18 +81,67 @@ public class GroupConfig extends AbstractResource {
     
     @Override
     public void save() {
-        // TODO Auto-generated method stub
+        FileWriter writer = null;
+        try {
+            writer = new FileWriter(new File(Resource.CONFIG_PATH, filename));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        List<Object> data = new LinkedList<Object>();
+        data.add(groupNames);
+        data.add(groupMembers);
+        Yaml yaml = new Yaml();
+        yaml.dumpAll(data.iterator(), writer);
 
     }
     
     public boolean hasAccess(String name, int level) {
-        if (level == 1) {
+        if (level == 0) {
             return true;
         }
-        int foundLevel = 1;
+        int foundLevel = 0;
         if (memberToLevel.containsKey(name)) {
             foundLevel = memberToLevel.get(name);
         }
         return foundLevel >= level;
+    }
+    
+    private int getMaxLevel() {
+        int level = 0;
+        for (Integer i : groupNames.keySet()) {
+            level = Math.max(level, i);
+        }
+        return level;
+    }
+    
+    public String promote(String clientName) {
+        if (memberToLevel.containsKey(clientName)) {
+            int max = getMaxLevel();
+            int currentLevel = memberToLevel.get(clientName);
+            if (currentLevel == max) {
+                return null;
+            }
+            groupMembers.get(currentLevel).remove(clientName);
+            groupMembers.get(currentLevel + 1).add(clientName);
+            memberToLevel.put(clientName, currentLevel + 1);
+            return groupNames.get(currentLevel + 1);
+        }
+        groupMembers.get(1).add(clientName);
+        memberToLevel.put(clientName, 1);
+        return groupNames.get(1);
+    }
+    
+    public String demote(String clientName) {
+        if (memberToLevel.containsKey(clientName)) {
+            int currentLevel = memberToLevel.get(clientName);
+            if (currentLevel == 0) {
+                return null;
+            }
+            groupMembers.get(currentLevel).remove(clientName);
+            groupMembers.get(currentLevel - 1).add(clientName);
+            memberToLevel.put(clientName, currentLevel - 1);
+            return groupNames.get(currentLevel - 1);
+        }
+        return null;
     }
 }

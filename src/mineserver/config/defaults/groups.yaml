@@ -1,10 +1,5 @@
-1: None 
-2: Mod 
-3: Admin
+{0: None, 1: Mod, 2: Admin}
 ---
-1: !!set 
-  {}
-2: !!set
-  {}
-3: !!set
-  {Console}
+0: !!set {}
+1: !!set {}
+2: !!set {Console: null}

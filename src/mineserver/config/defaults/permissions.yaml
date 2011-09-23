@@ -1,54 +1,60 @@
 Ban:
-  allow: 3
+  allow: 2
   show: true
 Drunk:
-  allow: 3
+  allow: 2
   show: false
 Help:
-  allow: 1
+  allow: 0
   show: true
 Gamemode:
-  allow: 3
+  allow: 2
   show: true
 Give:
-  allow: 2
+  allow: 1
   show: true
 Godmode:
-  allow: 3
-  show: true
-Kick:
   allow: 2
   show: true
-Lock:
+Kick:
   allow: 1
+  show: true
+Lock:
+  allow: 0
   show: true
 Message:
-  allow: 1
+  allow: 0
   show: true
 Mute:
+  allow: 1
+  show: true
+Promote:
   allow: 2
   show: true
 Rain:
-  allow: 2
+  allow: 1
   show: true
 Reply:
-  allow: 1
+  allow: 0
   show: true
 Smite:
   allow: 2
   show: false
 Speed:
-  allow: 3
+  allow: 2
   show: true
 Stop:
-  allow: 3
+  allow: 2
   show: true
 Teleport:
-  allow: 3
+  allow: 1
   show: true
 Time:
-  allow: 2
+  allow: 1
   show: true
 Vanish:
   allow: 2
+  show: true
+Who:
+  allow: 1
   show: true

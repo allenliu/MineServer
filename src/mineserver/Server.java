@@ -34,6 +34,7 @@ public class Server {
     private ServerSocket socket;
 
     public static final LocalAddressFactory addressFactory = new LocalAddressFactory();
+    public static final ServerProperties serverProperties = new ServerProperties();
     
     private MinecraftWrapper minecraft;
     private IOHandler ioHandler;
@@ -161,8 +162,9 @@ public class Server {
             init();
             startup();
 
-            int port = 25565;
-            String ip = "0.0.0.0";
+            String ip = ServerProperties.getString("ip-address");
+            int port = ServerProperties.getInt("external-port");
+            
 
             InetAddress address;
             if (ip.equals("0.0.0.0")) {
