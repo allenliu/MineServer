@@ -47,6 +47,8 @@ public class PlayerClient implements Client {
     private boolean kicked = false;
     private String kickReason = "";
 
+    private Client lastMessageSource;
+    
     private Queue<String> messages = new ConcurrentLinkedQueue<String>();
     private Queue<Event> events = new ConcurrentLinkedQueue<Event>();
 
@@ -194,6 +196,19 @@ public class PlayerClient implements Client {
         addMessage(Color.RED + message);
     }
 
+    public void message(Client source, String message) {
+        addMessage(Color.CYAN + "[" + source.getName() + " -> Me] " + message);
+        lastMessageSource = source;
+    }
+    
+    public void sentMessage(Client target, String message) {
+        addMessage(Color.CYAN + "[Me -> " + target.getName() + "] " + message);
+    }
+    
+    public Client getLastMessageSource() {
+        return lastMessageSource;
+    }
+    
     public void addMessage(String message) {
         messages.add(message);
     }

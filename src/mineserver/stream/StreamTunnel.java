@@ -10,6 +10,7 @@ import java.io.OutputStream;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import mineserver.IOHandler;
 import mineserver.Location;
 import mineserver.PlayerClient;
 import mineserver.resource.ChestList;
@@ -920,14 +921,13 @@ public class StreamTunnel {
                     out.flush();
                 } catch (IOException e) {
                     if (run) {
-                        System.out.println("ioexceptoin in " + tunneler.getName());
+                        IOHandler.println("Error in thread " + tunneler.getName());
                         e.printStackTrace();
                     }
                     break;
                 } catch (Exception e) {
-                    System.out.println("exceptoin in st");
+                    IOHandler.println("Error in thread " + tunneler.getName());
                     e.printStackTrace();
-                    System.out.println("in thread " + client.getName());
                     break;
                 }
             }

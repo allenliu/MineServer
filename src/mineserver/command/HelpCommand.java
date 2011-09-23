@@ -24,7 +24,7 @@ public class HelpCommand extends AbstractCommand {
     }
 
     public String getHelp() {
-        return "Display the help text";
+        return "Show a list of available commands.";
     }
     
     public String getUsage() {

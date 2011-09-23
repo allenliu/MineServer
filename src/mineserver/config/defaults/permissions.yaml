@@ -22,11 +22,17 @@ Kick:
 Lock:
   allow: 1
   show: true
+Message:
+  allow: 1
+  show: true
 Mute:
   allow: 2
   show: true
 Rain:
   allow: 2
+  show: true
+Reply:
+  allow: 1
   show: true
 Smite:
   allow: 2

@@ -40,7 +40,7 @@ public class KickCommand extends AbstractCommand {
             }
             return;
         }
-        if (args.length >= 2) {
+        if (args.length >= 3) {
             PlayerClient target = server.getTarget(client, args[1]);
             if (target != null) {
                 String reason = extractReason(line);                

@@ -4,6 +4,8 @@ public class ServerClient implements Client {
 
     private final Server server;
     
+    private Client lastMessageSource;
+    
     public ServerClient(Server server) {
         this.server = server;
     }
@@ -24,6 +26,19 @@ public class ServerClient implements Client {
     
     public void warning(String message) {
         IOHandler.println(message);
+    }
+    
+    public void message(Client source, String message) {
+        IOHandler.println("[" + source.getName() + " -> Console] " + message);
+        lastMessageSource = source;
+    }
+    
+    public void sentMessage(Client target, String message) {
+        IOHandler.println("[Console -> " + target.getName() + "] " + message);
+    }
+    
+    public Client getLastMessageSource() {
+        return lastMessageSource;
     }
     
     public void mute() {}

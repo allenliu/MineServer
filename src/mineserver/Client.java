@@ -6,7 +6,10 @@ public interface Client {
     public String getName();
     public void info(String message);
     public void usage(String message);
-    public void warning(String message);    
+    public void warning(String message); 
+    public void message(Client source, String message);
+    public void sentMessage(Client target, String message);
+    public Client getLastMessageSource();
     
     public void mute();
     public void unmute();
