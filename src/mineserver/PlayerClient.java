@@ -31,6 +31,7 @@ public class PlayerClient implements Client {
     private Watchdog watchdog;    
 
     private String name;
+    private String alias;
     private int eid;
 
     private Position position = new Position();
@@ -168,6 +169,9 @@ public class PlayerClient implements Client {
     }
 
     public String getName() {
+        if (alias != null) {
+            return alias;
+        }
         return name;
     }
 

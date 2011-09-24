@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project default="create_run_jar" name="Create Runnable Jar for Project MineServer with Jar-in-Jar Loader">
+    <!--this file was created by Eclipse Runnable JAR Export Wizard-->
+    <!--ANT 1.7 is required                                        -->
+    <target name="create_run_jar">
+        <jar destfile="MineServer.jar">
+            <manifest>
+                <attribute name="Main-Class" value="org.eclipse.jdt.internal.jarinjarloader.JarRsrcLoader"/>
+                <attribute name="Rsrc-Main-Class" value="mineserver.Main"/>
+                <attribute name="Class-Path" value="."/>
+                <attribute name="Rsrc-Class-Path" value="./ snakeyaml-1.9.jar httpclient-4.1.2.jar httpcore-4.1.2.jar commons-logging-1.1.1.jar commons-io-2.0.1.jar"/>
+            </manifest>
+            <zipfileset src="lib/jar-in-jar-loader.zip"/>
+            <fileset dir="bin"/>
+            <zipfileset dir="lib" includes="snakeyaml-1.9.jar"/>
+            <zipfileset dir="lib" includes="httpclient-4.1.2.jar"/>
+            <zipfileset dir="lib" includes="httpcore-4.1.2.jar"/>
+            <zipfileset dir="lib" includes="commons-logging-1.1.1.jar"/>
+            <zipfileset dir="lib" includes="commons-io-2.0.1.jar"/>
+        </jar>
+    </target>
+</project>
