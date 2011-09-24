@@ -22,9 +22,9 @@ public class SpawnEntityEvent implements Event {
         out.writeInt((int) (target.getPosition().x() * 32.0));
         out.writeInt((int) (target.getPosition().y() * 32.0));
         out.writeInt((int) (target.getPosition().z() * 32.0));
-        out.writeByte((byte) 0x00);
-        out.writeByte((byte) 0x00);
-        out.writeShort((short) 0);        
+        out.writeByte((byte) target.getPosition().yaw());
+        out.writeByte((byte) target.getPosition().pitch());
+        out.writeShort((short) 0);
     }
     
 }

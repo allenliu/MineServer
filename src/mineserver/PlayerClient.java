@@ -376,6 +376,9 @@ public class PlayerClient implements Client {
         private double y;
         private double z;
 
+        private float yaw;
+        private float pitch;
+        
         public Position() {
 
         }
@@ -386,6 +389,11 @@ public class PlayerClient implements Client {
             this.z = z;
         }
 
+        public void updateLook(float yaw, float pitch) {
+            this.yaw = yaw;
+            this.pitch = pitch;
+        }
+        
         public double x() {
             return x;
         }
@@ -396,6 +404,14 @@ public class PlayerClient implements Client {
 
         public double z() {
             return z;
+        }
+        
+        public float yaw() {
+            return yaw;
+        }
+        
+        public float pitch() {
+            return pitch;
         }
     }
 

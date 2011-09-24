@@ -1,4 +1,4 @@
-package mineserver.utils;
+package mineserver.util;
 
 public class StringUtil {
 

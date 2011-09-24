@@ -7,7 +7,7 @@ import java.util.Date;
 import mineserver.IOHandler;
 import mineserver.Server;
 import mineserver.config.ServerProperties;
-import mineserver.utils.ZipUtil;
+import mineserver.util.ZipUtil;
 
 import org.apache.commons.io.FileUtils;
 

@@ -522,9 +522,16 @@ public class StreamTunnel {
             write(in.readInt());
             write(in.readInt());
             break;
-        case 0x46: // Invalid Bed
+        case 0x46: // New/Invalid State
             write(packetId);
-            write(in.readByte());
+            byte state = in.readByte();
+            if (state == 1) {
+                client.getServer().setRain(true);
+            }
+            if (state == 2) {
+                client.getServer().setRain(false);
+            }
+            write(state);
             write(in.readByte());
             break;
         case 0x47: // Thunder
@@ -797,7 +804,7 @@ public class StreamTunnel {
     private void copyPlayerLook() throws IOException {
         float yaw = in.readFloat();
         float pitch = in.readFloat();
-
+        client.getPosition().updateLook(yaw, pitch);
         write(yaw);
         write(pitch);
     }

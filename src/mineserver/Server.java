@@ -310,6 +310,10 @@ public class Server {
             client.addEvent(new RainEvent(raining));
         }
     }
+    
+    public void setRain(boolean state) {
+        raining = state;
+    }
 
     public boolean isRaining() {
         return raining;

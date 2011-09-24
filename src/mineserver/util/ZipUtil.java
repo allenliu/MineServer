@@ -1,7 +1,7 @@
 /* Source at (thanks to McDowell):
  * http://stackoverflow.com/questions/1399126/java-util-zip-recreating-directory-structure */
 
-package mineserver.utils;
+package mineserver.util;
 
 import java.io.Closeable;
 import java.io.File;

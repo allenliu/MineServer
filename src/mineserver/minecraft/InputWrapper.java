@@ -5,7 +5,7 @@ import java.io.OutputStream;
 
 import mineserver.IOHandler;
 import mineserver.thread.SystemInputQueue;
-import mineserver.utils.StringUtil;
+import mineserver.util.StringUtil;
 
 public class InputWrapper extends Thread {
 
