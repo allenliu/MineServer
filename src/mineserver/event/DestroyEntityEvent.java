@@ -3,7 +3,6 @@ package mineserver.event;
 import java.io.DataOutputStream;
 import java.io.IOException;
 
-import mineserver.Effect;
 import mineserver.PlayerClient;
 
 public class DestroyEntityEvent implements Event {

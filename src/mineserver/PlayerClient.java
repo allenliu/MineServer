@@ -9,6 +9,7 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 import mineserver.command.Command;
 import mineserver.config.GroupConfig;
 import mineserver.config.PermissionConfig;
+import mineserver.config.ServerProperties;
 import mineserver.event.DestroyEntityEvent;
 import mineserver.event.Event;
 import mineserver.event.RainEvent;
@@ -42,6 +43,7 @@ public class PlayerClient implements Client {
     private ChestAction chestAction = ChestAction.NONE;
     private Location chestPlaced;
     private Location chestOpened;
+    private int gamemode;
 
     private boolean closed = false;
     private boolean loggedIn = false;
@@ -149,6 +151,8 @@ public class PlayerClient implements Client {
 
     public void loggedIn() {
         loggedIn = true;
+        gamemode = ServerProperties.getInt("gamemode");
+        server.runCommand("gamemode", new String[] {getName(), ServerProperties.getString("gamemode")});
         events.add(new RainEvent(getServer().isRaining()));
     }
 
@@ -156,6 +160,14 @@ public class PlayerClient implements Client {
         return loggedIn;
     }
 
+    public int getGamemode() {
+        return gamemode;
+    }
+    
+    public void setGamemode(int gamemode) {
+        this.gamemode = gamemode;
+    }
+    
     public boolean isKicked() {
         return kicked;
     }

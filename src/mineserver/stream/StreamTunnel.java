@@ -58,9 +58,9 @@ public class StreamTunnel {
     
     private void handlePacket() throws IOException {
         int eid;
-        int x;
-        byte y;
-        int z;
+        int x, xPos;
+        byte y, yPos;
+        int z, zPos;
         byte direction;
         short blockId;
         byte blockCount = 0;
@@ -122,7 +122,8 @@ public class StreamTunnel {
                 
                 if (cleanMessage.matches(CONSOLE_CHAT_PATTERN)) {
                     break;
-                }   
+                }
+                
             } else {
                 if (client.isMuted()) {
                     client.warning("You are muted.");
@@ -200,7 +201,9 @@ public class StreamTunnel {
             copyPlayerLocation();
             copyPlayerLook();
             readWriteBytes(1);
-            client.loggedIn();
+            if (!client.isLoggedIn()) {
+                client.loggedIn();
+            }
             break;
         case 0x0e: // Player Digging
             byte status = in.readByte();
@@ -208,12 +211,16 @@ public class StreamTunnel {
             y = in.readByte();
             z = in.readInt();
             direction = in.readByte();
-                
+            
             chestList = client.getServer().getChestList();
             location = new Location(x, y, z);
             if (chestList.contains(location)) {
                 if (chestList.getOwner(location).equals(client.getName())) {
-                    chestList.remove(location);
+                    if (client.getGamemode() == 0 && status == 2) {
+                        chestList.remove(location);
+                    } else if (client.getGamemode() == 1 && status == 0) {
+                        chestList.remove(location);
+                    }
                 } else {
                     if (status == 0) {
                         client.warning("This chest is locked by an enchantment.");
@@ -234,9 +241,9 @@ public class StreamTunnel {
             y = in.readByte();
             z = in.readInt();
             direction = in.readByte();
-            int xPos = x;
-            byte yPos = y;
-            int zPos = z;
+            xPos = x;
+            yPos = y;
+            zPos = z;
             switch (direction) {
               case 0:
                 --yPos;
@@ -525,14 +532,18 @@ public class StreamTunnel {
         case 0x46: // New/Invalid State
             write(packetId);
             byte state = in.readByte();
+            byte gamemode = in.readByte();
             if (state == 1) {
                 client.getServer().setRain(true);
             }
             if (state == 2) {
                 client.getServer().setRain(false);
             }
+            if (state == 3) {
+                client.setGamemode(gamemode);
+            }
             write(state);
-            write(in.readByte());
+            write(gamemode);
             break;
         case 0x47: // Thunder
             write(packetId);
