@@ -60,7 +60,7 @@ public class AutoSave {
                     announceSave();
                     
                     server.setSaving(true);
-                    server.runCommand("save-all", null);
+                    server.runCommand("save-all", "");
                     while (server.isSaving()) {
                         try {
                             Thread.sleep(100);

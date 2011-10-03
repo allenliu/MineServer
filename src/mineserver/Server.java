@@ -136,6 +136,10 @@ public class Server {
         minecraft.execute(command, args);
     }
 
+    public void runCommand(String command, String arg) {
+        minecraft.execute(command, arg);
+    }
+    
     private void kickAll() {
         for (PlayerClient client : getClients()) {
             client.kick("Server shutting down.");

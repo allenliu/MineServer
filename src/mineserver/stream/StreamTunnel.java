@@ -215,7 +215,7 @@ public class StreamTunnel {
             chestList = client.getServer().getChestList();
             location = new Location(x, y, z);
             if (chestList.contains(location)) {
-                if (chestList.getOwner(location).equals(client.getName())) {
+                if (chestList.getOwner(location).equals("") || chestList.getOwner(location).equals(client.getName())) {
                     if (client.getGamemode() == 0 && status == 2) {
                         chestList.remove(location);
                     } else if (client.getGamemode() == 1 && status == 0) {
@@ -559,25 +559,30 @@ public class StreamTunnel {
             if (windowType == (byte) 0x00) {
                 chestList = client.getServer().getChestList();
                 location = client.openedChest();
-                if (chestList.contains(location)) {
-                    if (chestList.getOwner(location).equals(client.getName())) {
-                        if (client.isUnlocking()) {
-                            client.unlockChest(location);
-                        } else {
-                            windowName = client.getName() + "'s Chest";
-                        }
+                if (!chestList.contains(location)) {
+                    chestList.addExistingChest(location);
+                }
+                if (client.isLocking()) {
+                    if (chestList.getOwner(location).equals("")) {
+                        client.lockChest(location);
+                        windowName = client.getName() + "'s Chest";
+                    } else if (chestList.getOwner(location).equals(client.getName())) {
+                        client.warning("You have already locked this chest.");
+                        windowName = client.getName() + "'s Chest";
                     } else {
                         open = false;
                         client.warning("This chest is locked by an enchantment.");
                     }
-                } else {
-                    if (client.isLocking()) {
-                        client.lockChest(location);
-                        windowName = client.getName() + "'s Chest";
-                    } else if (client.isUnlocking()) {
-                        client.warning("This chest was not locked to begin with.");
+                } else if (client.isUnlocking()) {
+                    if (chestList.getOwner(location).equals("")) {
+                        client.warning("This chest is already unlocked.");
+                    } else if (chestList.getOwner(location).equals(client.getName())) {
+                        client.unlockChest(location);
+                    } else {
+                        open = false;
+                        client.warning("This chest is locked by an enchantment.");
                     }
-                }
+                }               
             }
             
             if (open) {

@@ -148,7 +148,7 @@ public class MinecraftWrapper {
 
     public void stop() {
         IOHandler.println("Stopping server.");
-        execute("stop", null);
+        execute("stop", "");
         
         Server.serverProperties.setReadable();
         
@@ -168,5 +168,9 @@ public class MinecraftWrapper {
 
     public void execute(String command, String[] args) {
         in.injectCommand(command, args);
+    }
+    
+    public void execute(String command, String arg) {
+        in.injectCommand(command, arg);
     }
 }

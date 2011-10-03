@@ -32,7 +32,7 @@ public class SaveCommand extends AbstractCommand {
     @Override
     public void execute(Client client, String line) {
         server.saveResources();
-        server.runCommand("save-all", null);
+        server.runCommand("save-all", "");
         client.info("Map and resource files saved.");
     }
 }

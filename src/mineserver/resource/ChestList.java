@@ -30,12 +30,20 @@ public class ChestList extends YamlResource {
         super.save(new Yaml(new LocationRepresenter()), data);
     }
     
+    public void addExistingChest(Location location) {
+        data.put(location, "");
+    }
+    
     public boolean addLocked(String owner, Location location) {
         AdjacentStatus status = getAdjacentStatus(owner, location);
         if (status == AdjacentStatus.NONE) {
             data.put(location, owner);
             return true;
-        } else if (status == AdjacentStatus.OWN_CHEST) {
+        } else if (status == AdjacentStatus.UNLOCKED) {
+            data.put(location, owner);
+            data.put(getAdjacentChest(location), owner);
+            return true;
+        } else if (status == AdjacentStatus.LOCKED_OWN) {
             data.put(location, owner);
             return true;
         } else {
@@ -46,8 +54,9 @@ public class ChestList extends YamlResource {
     public boolean addUnlocked(String owner, Location location) {
         AdjacentStatus status = getAdjacentStatus(owner, location);
         if (status == AdjacentStatus.NONE) {
+            data.put(location, "");
             return true;
-        } else if (status == AdjacentStatus.OWN_CHEST) {
+        } else if (status == AdjacentStatus.LOCKED_OWN) {
             data.put(location, owner);
             return true;
         } else {
@@ -61,47 +70,92 @@ public class ChestList extends YamlResource {
         int z = location.z();
         String o = data.get(new Location(x + 1, y, z));
         if (o != null) {
-            if (!o.equals(owner)) {
-                return AdjacentStatus.OTHER_CHEST;
+            if (o.equals("")) {
+                return AdjacentStatus.UNLOCKED;
             }
-            return AdjacentStatus.OWN_CHEST;
+            if (!o.equals(owner)) {
+                return AdjacentStatus.LOCKED_OTHER;
+            }
+            return AdjacentStatus.LOCKED_OWN;
         }
         o = data.get(new Location(x - 1, y, z));
         if (o != null) {
-            if (!o.equals(owner)) {
-                return AdjacentStatus.OTHER_CHEST;
+            if (o.equals("")) {
+                return AdjacentStatus.UNLOCKED;
             }
-            return AdjacentStatus.OWN_CHEST;
+            if (!o.equals(owner)) {
+                return AdjacentStatus.LOCKED_OTHER;
+            }
+            return AdjacentStatus.LOCKED_OWN;
         }
         o = data.get(new Location(x, (byte) (y + 1), z));
         if (o != null) {
-            if (!o.equals(owner)) {
-                return AdjacentStatus.OTHER_CHEST;
+            if (o.equals("")) {
+                return AdjacentStatus.UNLOCKED;
             }
-            return AdjacentStatus.OWN_CHEST;
+            if (!o.equals(owner)) {
+                return AdjacentStatus.LOCKED_OTHER;
+            }
+            return AdjacentStatus.LOCKED_OWN;
         }
         o = data.get(new Location(x, (byte) (y - 1), z));
         if (o != null) {
-            if (!o.equals(owner)) {
-                return AdjacentStatus.OTHER_CHEST;
+            if (o.equals("")) {
+                return AdjacentStatus.UNLOCKED;
             }
-            return AdjacentStatus.OWN_CHEST;
+            if (!o.equals(owner)) {
+                return AdjacentStatus.LOCKED_OTHER;
+            }
+            return AdjacentStatus.LOCKED_OWN;
         }
         o = data.get(new Location(x, y, z + 1));
         if (o != null) {
-            if (!o.equals(owner)) {
-                return AdjacentStatus.OTHER_CHEST;
+            if (o.equals("")) {
+                return AdjacentStatus.UNLOCKED;
             }
-            return AdjacentStatus.OWN_CHEST;
+            if (!o.equals(owner)) {
+                return AdjacentStatus.LOCKED_OTHER;
+            }
+            return AdjacentStatus.LOCKED_OWN;
         }
         o = data.get(new Location(x, y, z - 1));
         if (o != null) {
-            if (!o.equals(owner)) {
-                return AdjacentStatus.OTHER_CHEST;
+            if (o.equals("")) {
+                return AdjacentStatus.UNLOCKED;
             }
-            return AdjacentStatus.OWN_CHEST;
+            if (!o.equals(owner)) {
+                return AdjacentStatus.LOCKED_OTHER;
+            }
+            return AdjacentStatus.LOCKED_OWN;
         }
         return AdjacentStatus.NONE;
+    }
+    
+    public Location getAdjacentChest(Location location) {
+        int x = location.x();
+        byte y = location.y();
+        int z = location.z();
+        Location adjacent = new Location(x + 1, y, z);
+        String o = data.get(adjacent);
+        if (o != null) {
+            return adjacent;
+        }
+        adjacent = new Location(x - 1, y, z);
+        o = data.get(adjacent);
+        if (o != null) {
+            return adjacent;
+        }
+        adjacent = new Location(x + 1, y, z + 1);
+        o = data.get(adjacent);
+        if (o != null) {
+            return adjacent;
+        }
+        adjacent = new Location(x + 1, y, z - 1);
+        o = data.get(adjacent);
+        if (o != null) {
+            return adjacent;
+        }
+        return null;
     }
     
     public void remove(Location location) {
@@ -117,7 +171,7 @@ public class ChestList extends YamlResource {
     }
     
     public enum AdjacentStatus {
-        NONE, OWN_CHEST, OTHER_CHEST;
+        NONE, UNLOCKED, LOCKED_OWN, LOCKED_OTHER;
     }
     
     public class LocationConstructor extends SafeConstructor {

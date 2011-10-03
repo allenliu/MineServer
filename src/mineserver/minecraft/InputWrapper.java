@@ -35,6 +35,16 @@ public class InputWrapper extends Thread {
             //messageHandler.handleError(e);
         }
     }
+    
+    public void injectCommand(String command, String arg) {
+        String line = String.format("%s %s\n", command, arg);
+        try {
+            out.write(line.getBytes());
+            out.flush();
+        } catch (IOException e) {
+            //messageHandler.handleError(e);
+        }
+    }
 
     @Override
     public void interrupt() {

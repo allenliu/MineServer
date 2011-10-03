@@ -63,10 +63,10 @@ public class AutoBackup {
         IOHandler.println("Backing up server...");
         server.announce("Backing up server...");
         
-        server.runCommand("save-off", null);
+        server.runCommand("save-off", "");
         File backup = new File(BACKUP_PATH, String.format(NAME_FORMAT, new Date()));
         FileUtils.copyDirectory(new File(Server.SERVER_PATH + "/" + "world"), backup);
-        server.runCommand("save-on", null);
+        server.runCommand("save-on", "");
         
         ZipUtil.zip(backup, new File(BACKUP_PATH + "/" + backup.getName() + ".zip"));
         FileUtils.deleteDirectory(backup);
@@ -95,7 +95,7 @@ public class AutoBackup {
                     announceSave();
 
                     server.setSaving(true);
-                    server.runCommand("save-all", null);
+                    server.runCommand("save-all", "");
                     while (server.isSaving()) {
                         try {
                             Thread.sleep(100);

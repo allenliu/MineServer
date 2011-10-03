@@ -4,6 +4,9 @@ Backup:
 Ban:
   allow: 2
   show: true
+Broadcast:
+  allow: 1
+  show: true
 Drunk:
   allow: 2
   show: false
